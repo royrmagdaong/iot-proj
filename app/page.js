@@ -10,10 +10,10 @@ export default function Home() {
   },[])
 
   return (
-    <div className="p-2 h-screen">
-
-      <div className="grid grid-flow-col grid-rows-3 gap-4 h-full">
-        <div className="bg-amber-100 justify-self-center" style={{width: '70%'}}>
+    <div className="h-screen flex justify-center flex-col my-2">
+      <div className="text-center text-2xl sm:text-3xl mb-6 text-gray-600 font-bold" >Fish Pond Monitoring</div>
+      <div className="grid grid-flow-col sm:grid-rows-1 grid-rows-3 w-screen">
+        <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -23,34 +23,34 @@ export default function Home() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 2,
+                  limit: 10,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
-                    text: 'Too low Dissolved Oxygen!'
+                    text: 'Too low Temperature!'
                   },
                   onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
                   onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 3,
+                  limit: 15,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
-                    text: 'Low Dissolved Oxygen!'
+                    text: 'Low Temperature!'
                   }
                 },
                 {
-                  limit: 12,
+                  limit: 40,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
-                    text: 'OK Dissolved Oxygen!'
+                    text: 'OK Temperature!'
                   }
                 },
                 {
-                  limit: 13, color: '#F5CD19', showTick: true,
+                  limit: 45, color: '#F5CD19', showTick: true,
                   tooltip: {
                     text: 'High Dissolved Oxygen!'
                   }
@@ -70,30 +70,30 @@ export default function Home() {
               elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + 'mg/L', 
+              valueLabel: { formatTextValue: value => value + '°C', 
                 style: {display:'none'}
               },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
-                  formatTextValue: (value) => value + 'mg/L' ,
+                  formatTextValue: (value) => value + '°C' ,
                   style: {fontSize: 10}
               },
                 ticks: [
-                  { value: 0 },
-                  { value: 5 },
-                  { value: 15 }
+                  { value: 30 },
+                  { value: 30 },
+                  { value: 50 }
                 ],
               }
             }}
-            value={5}
+            value={30}
             minValue={0}
-            maxValue={15}
+            maxValue={50}
           />
-          <p className="text-center">10.1</p>
-          <h4 className="text-center">Temperature</h4>
+          <p className="text-center text-gray-600">30 °C</p>
+          <h4 className="text-center uppercase text-gray-600 font-bold">Temperature</h4>
         </div>
-        <div className="justify-self-center" style={{width: '70%'}}>
+        <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -103,42 +103,42 @@ export default function Home() {
               // gradient: true,
               subArcs: [
                 {
-                  limit: 2,
+                  limit: 4,
                   color: '#EA4228',
                   showTick: true,
                   tooltip: {
-                    text: 'Too low Dissolved Oxygen!'
+                    text: 'Too low pH!'
                   },
                   onClick: () => console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
                   onMouseMove: () => console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"),
                   onMouseLeave: () => console.log("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"),
                 },
                 {
-                  limit: 3,
+                  limit: 6,
                   color: '#F5CD19',
                   showTick: true,
                   tooltip: {
-                    text: 'Low Dissolved Oxygen!'
+                    text: 'Low pH!'
                   }
                 },
                 {
-                  limit: 12,
+                  limit: 9,
                   color: '#5BE12C',
                   showTick: true,
                   tooltip: {
-                    text: 'OK Dissolved Oxygen!'
+                    text: 'OK pH!'
                   }
                 },
                 {
-                  limit: 13, color: '#F5CD19', showTick: true,
+                  limit: 11, color: '#F5CD19', showTick: true,
                   tooltip: {
-                    text: 'High Dissolved Oxygen!'
+                    text: 'High pH!'
                   }
                 },
                 {
                   color: '#EA4228',
                   tooltip: {
-                    text: 'Too high Dissolved Oxygen!'
+                    text: 'Too high pH!'
                   }
                 }
               ]
@@ -160,20 +160,20 @@ export default function Home() {
                   style: {fontSize: 10}
               },
                 ticks: [
-                  { value: 0 },
-                  { value: 5 },
-                  { value: 15 }
+                  { value: 3 },
+                  { value: 7 },
+                  { value: 12 }
                 ],
               }
             }}
-            value={5}
-            minValue={0}
-            maxValue={15}
+            value={7}
+            minValue={3}
+            maxValue={12}
           />
-          <p className="text-center">10.1</p>
-          <h4 className="text-center">pH</h4>
+          <p className="text-center text-gray-600">10.1</p>
+          <h4 className="text-center uppercase text-gray-600 font-bold">pH</h4>
         </div>
-        <div className="justify-self-center" style={{width: '70%'}}>
+        <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -250,8 +250,8 @@ export default function Home() {
             minValue={0}
             maxValue={15}
           />
-          <p className="text-center">10.1</p>
-          <h4 className="text-center">Dissolved Oxygen</h4>
+          <p className="text-center text-gray-600">5 mg/L</p>
+          <h4 className="text-center uppercase text-gray-600 font-bold">Dissolved Oxygen</h4>
         </div>
         
       </div>
