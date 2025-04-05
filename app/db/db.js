@@ -6,7 +6,7 @@ const connect = async () => {
 
     try {
          mongoose.connect(MONGODB_URI, {
-            dbName: 'iot',
+            dbName: 'iot_2',
             bufferCommands: true
         });
 

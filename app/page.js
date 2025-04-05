@@ -2,16 +2,33 @@
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/navigation'
 import GaugeComponent from 'react-gauge-component';
+import NavBar from './components/nav-bar'
+import axios from 'axios'
 
 export default function Home() {
+  const [curReading, setCurReading] = useState({pH: 7, temp: 37.7, dox: 7.7})
 
   useEffect(()=>{
 
+    getSensorData()
   },[])
 
+  const getSensorData = async () => {
+    await axios.get(`http://localhost:3000/api/sensor-readings`).then(res => {
+      // console.log('response', res.data.data)
+      setCurReading(res.data?.data[0])
+      console.log(res.data?.data[0])
+      console.log
+    }).catch(err => {
+      console.log('error', err)
+    })
+  }
+
   return (
-    <div className="h-screen flex justify-center flex-col my-2">
-      <div className="text-center text-2xl sm:text-3xl mb-6 text-gray-600 font-bold" >Fish Pond Monitoring</div>
+    <div className=" flex justify-center flex-col my-2 mb-14">
+      <NavBar></NavBar>
+
+      <div className="text-center text-2xl sm:text-3xl mb-6 text-gray-600 font-bold mt-2" >Fish Pond Monitoring</div>
       <div className="grid grid-flow-col sm:grid-rows-1 grid-rows-3 w-screen">
         <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
@@ -52,13 +69,13 @@ export default function Home() {
                 {
                   limit: 45, color: '#F5CD19', showTick: true,
                   tooltip: {
-                    text: 'High Dissolved Oxygen!'
+                    text: 'High Temperature!'
                   }
                 },
                 {
                   color: '#EA4228',
                   tooltip: {
-                    text: 'Too high Dissolved Oxygen!'
+                    text: 'Too high Temperature!'
                   }
                 }
               ]
@@ -81,17 +98,17 @@ export default function Home() {
               },
                 ticks: [
                   { value: 30 },
-                  { value: 30 },
+                  { value: curReading?.temp },
                   { value: 50 }
                 ],
               }
             }}
-            value={30}
+            value={curReading?.temp}
             minValue={0}
             maxValue={50}
           />
-          <p className="text-center text-gray-600">30 °C</p>
-          <h4 className="text-center uppercase text-gray-600 font-bold">Temperature</h4>
+          <p className="text-center text-gray-600">{curReading?.temp} °C</p>
+          <h4 className="text-center text-gray-600 font-bold mb-4">Temperature</h4>
         </div>
         <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
@@ -150,28 +167,28 @@ export default function Home() {
               elastic: true,
             }}
             labels={{
-              valueLabel: { formatTextValue: value => value + 'mg/L', 
+              valueLabel: { formatTextValue: value => value + '', 
                 style: {display:'none'}
               },
               tickLabels: {
                 type: 'outer',
                 defaultTickValueConfig: { 
-                  formatTextValue: (value) => value + 'mg/L' ,
+                  formatTextValue: (value) => value + '' ,
                   style: {fontSize: 10}
               },
                 ticks: [
                   { value: 3 },
-                  { value: 7 },
+                  { value: curReading?.pH },
                   { value: 12 }
                 ],
               }
             }}
-            value={7}
+            value={curReading?.pH}
             minValue={3}
             maxValue={12}
           />
-          <p className="text-center text-gray-600">10.1</p>
-          <h4 className="text-center uppercase text-gray-600 font-bold">pH</h4>
+          <p className="text-center text-gray-600">{curReading?.pH}</p>
+          <h4 className="text-center text-gray-600 font-bold">pH</h4>
         </div>
         <div className="justify-self-center" style={{width: '75%'}}>
           <GaugeComponent
@@ -241,17 +258,17 @@ export default function Home() {
               },
                 ticks: [
                   { value: 0 },
-                  { value: 5 },
+                  { value: curReading?.dox },
                   { value: 15 }
                 ],
               }
             }}
-            value={5}
+            value={curReading?.dox}
             minValue={0}
             maxValue={15}
           />
-          <p className="text-center text-gray-600">5 mg/L</p>
-          <h4 className="text-center uppercase text-gray-600 font-bold">Dissolved Oxygen</h4>
+          <p className="text-center text-gray-600">{curReading?.dox} mg/L</p>
+          <h4 className="text-center text-gray-600 font-bold">Dissolved Oxygen</h4>
         </div>
         
       </div>
