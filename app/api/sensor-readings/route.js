@@ -23,9 +23,9 @@ export const POST = async (request) => {
         const body = await request.json();
         // console.log(await request.json())
 
-        const temp = body.temp
-        const pH = body.pH
-        const dox = body.dox
+        const temp = body?.data.temp
+        const pH = body?.data.pH
+        const dox = body?.data.dox
 
         console.log('body', body)
         

@@ -14,7 +14,8 @@ export default function Home() {
   },[])
 
   const getSensorData = async () => {
-    await axios.get(`http://localhost:3000/api/sensor-readings`).then(res => {
+    await axios.get(`https://fishpondmonitoring.netlify.app/api/sensor-readings`).then(res => {
+    // await axios.get(`http://localhost:3000/api/sensor-readings`).then(res => {
       // console.log('response', res.data.data)
       setCurReading(res.data?.data[0])
       console.log(res.data?.data[0])
@@ -270,6 +271,10 @@ export default function Home() {
           <p className="text-center text-gray-600">{curReading?.dox} mg/L</p>
           <h4 className="text-center text-gray-600 font-bold">Dissolved Oxygen</h4>
         </div>
+
+
+
+        
         
       </div>
     </div>
