@@ -51,7 +51,7 @@ export default function Home() {
     },[])
 
     const getSensorData = async () => {
-    await axios.get(`https://fishpondmonitoring.netlify.app/api/sensor-readings`).then(res => {
+    await axios.get(`https://fishpondmonitoring.netlify.app/api/data-history`).then(res => {
         // await axios.post(`http://localhost:3000/api/data-history`).then(res => {
             // console.log('response', res.data.data)
             // console.log(res.data)
