@@ -5,7 +5,8 @@ import { headers } from 'next/headers'
 import axios from 'axios'
 
 
-export const GET = async () => {
+
+export async function GET() {
     try{
         // mongodb 
         // blocked by mirdc network
