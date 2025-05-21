@@ -11,7 +11,7 @@ export async function GET() {
         // mongodb 
         // blocked by mirdc network
         await connect();
-        const sensorReading = await SensorReading.find().sort({ createdAt: -1 }).limit(1)
+        const sensorReading = await SensorReading.find().sort({ date: -1, createdAt: -1}).limit(1)
         return new NextResponse(JSON.stringify({message: 'fetch data successfully!',data: sensorReading }), {status: 200});
     } catch (error) {
         return new NextResponse("Error in fetching Sensor Readings, " + error.message, {status: 500});
