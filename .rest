@@ -1,0 +1,12 @@
+POST http://localhost:3000/api/data-upload
+Content-Type: application/json
+
+{
+    "data": {
+        "temp": 32,
+        "pH": 1,
+        "dox": 2,
+        "date": "05-22-2025",
+        "time": "10:10:10"
+    }
+}

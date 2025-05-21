@@ -42,22 +42,24 @@ export default function Home() {
     const [readings, setReadings] = useState([])
     const [param, setParam] = useState('temp')
 
-    const [limit, setLimit] = useState(10)
-    const [offset, setOffset] = useState(5)
+    const [limit, setLimit] = useState(20)
+    const [totalPage, setTotalPage] = useState(1)
+    const [page, setPage] = useState(1)
     
     useEffect(()=>{
 
-        getSensorData()
+        getSensorData(0,20)
     },[])
 
-    const getSensorData = async () => {
-    await axios.post(`https://fishpondmonitoring.netlify.app/api/data-history`).then(res => {
-        // await axios.post(`http://localhost:3000/api/data-history`).then(res => {
+    const getSensorData = async (skip) => {
+    await axios.post(`https://fishpondmonitoring.netlify.app/api/data-history`,{skip,limit}).then(res => {
+        // await axios.post(`http://localhost:3000/api/data-history`,{skip,limit}).then(res => {
             // console.log('response', res.data.data)
             // console.log(res.data)
             setReadings(res.data?.data)
             console.log(res.data)
-        }).catch(err => {
+            setTotalPage(Math.ceil((res.data?.total)/limit)-1)
+        }).catch(err => { 
             console.log('error', err)
         })
     }
@@ -66,6 +68,22 @@ export default function Home() {
 
     const handleParam = (val) => {
         setParam(val)
+    }
+
+    const handlePageChange = async (val) => {
+        setPage(val)
+        // console.log('page', val)
+        getSensorData(val*limit, limit)
+    }
+
+    const handleTimeFormat = (data) => {
+        
+        if(data.time){
+            // return moment(moment(data.time, "H:mm:ss").format("HH:mm:ss")).format('LT')
+            return moment(data.time, "H:mm:ss").format("h:mm a")
+        }else{
+            return moment(data.createdAt).format('LT')
+        }
     }
 
     return (
@@ -124,8 +142,8 @@ export default function Home() {
                                             <StyledTableCell component="th" scope="row">{i?.pH}</StyledTableCell>
                                         }
                                         
-                                        <StyledTableCell >{moment(i?.createdAt).format('LT')}</StyledTableCell>
-                                        <StyledTableCell >{moment(i?.createdAt).format('ll')}</StyledTableCell>
+                                        <StyledTableCell >{handleTimeFormat(i)}</StyledTableCell>
+                                        <StyledTableCell >{moment(i?.date).format('ll')}</StyledTableCell>
                                         {/* <StyledTableCell>Normal</StyledTableCell> */}
                                     </StyledTableRow>
                                 </TableBody>
@@ -136,7 +154,7 @@ export default function Home() {
 
             <div className='mt-3 flex justify-center'>
                 <Stack spacing={3}>
-                    <Pagination onChange={(e,page)=>console.log(page)} count={5} page={1} variant='outlined' shape='rounded' />
+                    <Pagination onChange={(e,page)=>handlePageChange(page)} count={totalPage} page={page} variant='outlined' shape='rounded' />
                 </Stack>
             </div>
             <NavBar></NavBar>
