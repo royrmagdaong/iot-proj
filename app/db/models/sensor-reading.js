@@ -13,6 +13,12 @@ const SensorReadingSchema = new Schema(
         dox: {
             type: Number,
             require: true
+        },
+        date: {
+            type: String
+        },
+        time: {
+            type: String
         }
     },
     {
