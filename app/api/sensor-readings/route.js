@@ -27,6 +27,8 @@ export const POST = async (request) => {
         const temp = body?.data.temp
         const pH = body?.data.pH
         const dox = body?.data.dox
+        const date = body?.data.date
+        const time = body?.data.time
 
         console.log('body', body)
         
@@ -34,7 +36,9 @@ export const POST = async (request) => {
         const newReadings = new SensorReading({
             temp: temp,
             pH: pH,
-            dox: dox
+            dox: dox,
+            date: date,
+            time: time
         });
         await newReadings.save()
 
